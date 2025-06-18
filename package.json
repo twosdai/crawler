@@ -1,7 +1,7 @@
 {
   "name": "crawler",
   "version": "0.0.1",
-  "description": "",
+  "description": "Multi-Agent Business Research System",
   "author": "",
   "private": true,
   "license": "UNLICENSED",
@@ -23,8 +23,19 @@
     "@nestjs/common": "^10.0.0",
     "@nestjs/core": "^10.0.0",
     "@nestjs/platform-express": "^10.0.0",
+    "@nestjs/config": "^3.0.0",
+    "@nestjs/swagger": "^7.0.0",
     "reflect-metadata": "^0.1.13",
-    "rxjs": "^7.8.1"
+    "rxjs": "^7.8.1",
+    "openai": "^4.0.0",
+    "puppeteer": "^21.0.0",
+    "cheerio": "^1.0.0-rc.12",
+    "axios": "^1.5.0",
+    "class-validator": "^0.14.0",
+    "class-transformer": "^0.5.1",
+    "helmet": "^7.0.0",
+    "winston": "^3.10.0",
+    "nest-winston": "^1.10.0"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.0.0",
@@ -34,6 +45,7 @@
     "@types/jest": "^29.5.2",
     "@types/node": "^20.3.1",
     "@types/supertest": "^2.0.12",
+    "@types/cheerio": "^0.22.31",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
     "eslint": "^8.42.0",

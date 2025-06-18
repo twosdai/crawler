@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development
+    container_name: business-research-system
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - LOG_LEVEL=debug
+      - MAX_PAGES_PER_ANALYSIS=10
+      - ANALYSIS_TIMEOUT_MINUTES=5
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: npm run start:dev
+    restart: unless-stopped
+    networks:
+      - business-research-network
+    mem_limit: 2g
+    cpu_shares: 1024
+
+  app-prod:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    container_name: business-research-system-prod
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - LOG_LEVEL=info
+      - MAX_PAGES_PER_ANALYSIS=10
+      - ANALYSIS_TIMEOUT_MINUTES=5
+    restart: unless-stopped
+    networks:
+      - business-research-network
+    mem_limit: 2g
+    cpu_shares: 1024
+
+networks:
+  business-research-network:
+    driver: bridge
