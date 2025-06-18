@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  app:
+    volumes:
+      # Mount local code for hot reloading
+      - ./src:/app/src:delegated
+      - ./test:/app/test:delegated
+      # Prevent node_modules from being overwritten
+      - /app/node_modules
+    environment:
+      # Override environment for local development
+      - LOG_LEVEL=debug
+      - NODE_ENV=development

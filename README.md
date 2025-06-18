@@ -1,73 +1,223 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Multi-Agent Business Research System
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+A NestJS-based multi-agent system that analyzes business websites and returns comprehensive business intelligence reports using web scraping and OpenAI agents.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Features
 
-## Description
+- **Multi-Agent Architecture**: Specialized agents for different aspects of business analysis
+  - Web Crawler Agent: Extracts content from websites
+  - Personnel Research Agent: Identifies key personnel and decision makers
+  - Business Analysis Agent: Analyzes operations and market strategy
+  - News Research Agent: Finds recent developments and trends
+  - Quality Assurance Agent: Evaluates data completeness
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- **Intelligent Web Scraping**: Uses Puppeteer and Cheerio for robust data extraction
+- **OpenAI Integration**: Leverages GPT-4 for intelligent data analysis
+- **Docker Support**: Fully containerized application
+- **Comprehensive API**: RESTful API with Swagger documentation
+- **Configurable**: Environment-based configuration for all settings
+
+## Prerequisites
+
+- Node.js 18.x or higher
+- Docker and Docker Compose
+- OpenAI API key
 
 ## Installation
 
+1. Clone the repository:
 ```bash
-$ npm install
+git clone <repository-url>
+cd crawler
 ```
 
-## Running the app
-
+2. Install dependencies:
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+npm install
 ```
 
-## Test
-
+3. Create a `.env` file from the example:
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+cp .env.example .env
 ```
 
-## Support
+4. Configure your OpenAI API key in `.env`:
+```
+OPENAI_API_KEY=your_openai_api_key_here
+```
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## Running the Application
 
-## Stay in touch
+### Development Mode
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+```bash
+# Start in watch mode
+npm run start:dev
+
+# Start with Docker
+docker-compose up app
+```
+
+### Production Mode
+
+```bash
+# Build the application
+npm run build
+
+# Start production server
+npm run start:prod
+
+# Or use Docker
+docker-compose up app-prod
+```
+
+## API Documentation
+
+Once the application is running, you can access:
+
+- Swagger Documentation: `http://localhost:3000/api/docs`
+- Health Check: `http://localhost:3000/health`
+
+## API Endpoints
+
+### Analyze Business Website
+
+**POST** `/api/business-research/analyze`
+
+Request body:
+```json
+{
+  "website": "https://example.com",
+  "maxPages": 10,
+  "timeoutMinutes": 5
+}
+```
+
+Response:
+```json
+{
+  "success": true,
+  "metadata": {
+    "requestId": "uuid",
+    "duration": "45s",
+    "pagesAnalyzed": 8
+  },
+  "summary": "Business summary text...",
+  "report": {
+    "businessOverview": {
+      "name": "Example Corp",
+      "industry": "Technology",
+      "description": "...",
+      "operations": ["Software Development", "Consulting"]
+    },
+    "keyPersonnel": {
+      "owners": [...],
+      "executives": [...],
+      "decisionMakers": [...]
+    },
+    "marketStrategy": {
+      "targetMarket": "Enterprise clients",
+      "goToMarketStrategy": "Direct sales",
+      "marketingChannels": ["Website", "LinkedIn", "Content Marketing"]
+    },
+    "currentStatus": {
+      "recentNews": [...],
+      "challenges": [...],
+      "opportunities": [...]
+    }
+  }
+}
+```
+
+## Testing
+
+Run the test suite:
+```bash
+# Unit tests
+npm run test
+
+# Test coverage
+npm run test:cov
+
+# E2E tests
+npm run test:e2e
+```
+
+## Configuration
+
+Key configuration options in `.env`:
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `OPENAI_API_KEY` | OpenAI API key (required) | - |
+| `PORT` | Application port | 3000 |
+| `MAX_PAGES_PER_ANALYSIS` | Maximum pages to scrape | 10 |
+| `ANALYSIS_TIMEOUT_MINUTES` | Analysis timeout | 5 |
+| `LOG_LEVEL` | Logging level | info |
+| `PUPPETEER_TIMEOUT_MS` | Page load timeout | 30000 |
+
+## Architecture
+
+The system follows a modular architecture:
+
+```
+src/
+├── modules/
+│   ├── web-scraping/       # Web scraping functionality
+│   ├── agent-orchestration/ # Agent coordination
+│   └── report-generation/   # Report formatting
+├── common/
+│   ├── interfaces/         # TypeScript interfaces
+│   └── dto/               # Data transfer objects
+└── config/                # Configuration files
+```
+
+## Docker
+
+Build and run with Docker:
+
+```bash
+# Build image
+docker build -t business-research-system .
+
+# Run container
+docker run -p 3000:3000 --env-file .env business-research-system
+
+# Or use docker-compose
+docker-compose up
+```
+
+## Performance Considerations
+
+- The system limits web scraping to 10 pages by default
+- Analysis timeout is set to 5 minutes
+- Puppeteer runs with optimized settings for containerized environments
+- Rate limiting is implemented to avoid overwhelming target websites
+
+## Troubleshooting
+
+### Common Issues
+
+1. **Puppeteer fails in Docker**: Ensure Chrome dependencies are installed (handled in Dockerfile)
+2. **OpenAI API errors**: Check your API key and rate limits
+3. **Timeout errors**: Increase `ANALYSIS_TIMEOUT_MINUTES` for complex websites
+4. **Memory issues**: Adjust Docker memory limits in docker-compose.yml
+
+### Debug Mode
+
+Enable debug logging:
+```bash
+LOG_LEVEL=debug npm run start:dev
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a Pull Request
 
 ## License
 
-Nest is [MIT licensed](LICENSE).
+This project is licensed under the UNLICENSED license.
